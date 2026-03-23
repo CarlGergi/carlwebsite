@@ -10,16 +10,30 @@ export type Project = {
   cta: string;
   href: string;
   event?: string;
+  repo?: string;
+  demo?: string;
+  devpost?: string;
+  image?: string;
+  gradient: string;
 };
 
 export const projects: Project[] = [
   {
     title: "Finora",
     slug: "finora",
-    tagline: "Voice-first AI budgeting companion that makes financial decisions feel human",
+    tagline:
+      "A voice-first AI budgeting companion that replaces guilt with genuine conversation",
     description:
-      "Traditional budgeting tools are cold, rigid, and disconnected from the emotional reality of student life. Finora replaces guilt with conversation — a voice-first financial assistant powered by Claude Sonnet 4 that listens, sees, thinks, and helps students make real-time spending decisions with confidence instead of anxiety.",
-    tags: ["React", "TypeScript", "Vite", "Supabase", "Claude API", "ElevenLabs", "Tailwind CSS"],
+      "Budgeting apps talk at you. Finora talks with you. Built at the Anthropic Hackathon, Finora is a voice-first financial assistant powered by Claude Sonnet 4 that listens to how students actually spend, sees receipts through computer vision, and helps make real-time spending decisions — with empathy instead of judgment. Students don't need another spreadsheet. They need a conversation.",
+    tags: [
+      "React",
+      "TypeScript",
+      "Vite",
+      "Supabase",
+      "Claude API",
+      "ElevenLabs",
+      "Tailwind CSS",
+    ],
     bullets: [
       "Built a voice-first budgeting assistant where students speak naturally and receive empathetic, budget-aware guidance powered by Claude Sonnet 4 with ElevenLabs TTS — replacing rigid forms with real conversation.",
       "Implemented Finora Vision using Claude's computer vision to analyze photos of receipts, menus, and price tags, delivering instant affordability breakdowns against the user's live budget.",
@@ -29,13 +43,20 @@ export const projects: Project[] = [
     cta: "Watch the demo",
     href: "https://youtu.be/zAN5Ru6b67E",
     event: "Anthropic Hackathon",
+    repo: "https://github.com/CarlGergi/anthropichackaton",
+    demo: "https://youtu.be/zAN5Ru6b67E",
+    devpost: "https://devpost.com/software/finora-ifouqv",
+    image: "https://img.youtube.com/vi/zAN5Ru6b67E/maxresdefault.jpg",
+    gradient:
+      "linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #312e81 65%, #1e3a5f 100%)",
   },
   {
     title: "Auri",
     slug: "auri",
-    tagline: "Conversational AI agent for end-to-end hotel guest interactions",
+    tagline:
+      "A conversational AI concierge that reimagines the hotel guest experience from check-in to checkout",
     description:
-      "The brief was to build the next generation of human–computer interaction. We built Auri: a conversational AI agent that manages end-to-end guest interactions — check-in, ID verification, payments, and in-stay requests — with multilingual support across emails, kiosks, calls, and messaging. We delivered and demoed a working POC.",
+      "What if checking into a hotel felt like talking to a friend? Auri is a conversational AI agent that manages the entire guest journey — check-in, ID verification, payments, and room requests — across emails, kiosks, calls, and messaging. Built for the TechTO Hackathon, where we delivered a working POC with sub-500ms voice latency and were selected as finalists.",
     tags: ["React", "Tailwind", "WebSockets", "ElevenLabs"],
     bullets: [
       "Built a conversational AI agent that adds a new dimension to hospitality — guests simply talk, and the agent handles check-in, ID verification, payments, and in-stay requests end-to-end.",
@@ -45,14 +66,26 @@ export const projects: Project[] = [
     cta: "Visit the site",
     href: "https://loud-tweak-592173.framer.app/",
     event: "TechTO Hackathon — Finalist",
+    repo: "https://github.com/CarlGergi/auri",
+    gradient:
+      "linear-gradient(135deg, #022c22 0%, #064e3b 35%, #0d9488 65%, #134e4a 100%)",
   },
   {
     title: "TD Threat Denied",
     slug: "td-threat-denied",
-    tagline: "Zero-friction email phishing verification powered by a 6-agent AI pipeline",
+    tagline:
+      "A 6-agent AI pipeline that verdicts phishing emails in under 30 seconds — no clicks, no risk",
     description:
-      "The problem with phishing isn't a lack of security — it's a lack of instant verification. Users forward any suspicious email and receive a verdict (FRAUD, LEGITIMATE, or UNDER REVIEW) in under 30 seconds. Six specialized AI agents analyze sender authenticity, URL forensics, social engineering patterns, template matching, and known campaigns before a managing agent renders the final verdict.",
-    tags: ["Python", "FastAPI", "Next.js", "Claude API", "SendGrid", "SQLAlchemy", "SQLite"],
+      "The instinct when you get a suspicious email is to click and check. That's exactly what attackers want. TD Threat Denied flips the model: forward any suspicious email, and six specialized AI agents — sender authentication, URL forensics, social engineering analysis, template matching, and campaign detection — deliver a verdict before you ever touch a link.",
+    tags: [
+      "Python",
+      "FastAPI",
+      "Next.js",
+      "Claude API",
+      "SendGrid",
+      "SQLAlchemy",
+      "SQLite",
+    ],
     bullets: [
       "Built an email-native phishing verification system — users forward suspicious emails and receive a clear verdict in under 30 seconds, eliminating the instinct to click risky links to check legitimacy.",
       "Designed a 6-agent AI pipeline where five specialist agents (sender check, URL forensics, content analysis, template matching, campaign matching) feed structured reports into a managing agent that renders a weighted verdict with a confidence score.",
@@ -62,28 +95,39 @@ export const projects: Project[] = [
     cta: "Watch the demo",
     href: "https://www.youtube.com/watch?v=H3lH_ozz0hU",
     event: "GenAI Genesis Hackathon",
+    repo: "https://github.com/tabetant/threatdenied",
+    demo: "https://www.youtube.com/watch?v=H3lH_ozz0hU",
+    devpost: "https://devpost.com/software/td-threat-denied",
+    image: "https://img.youtube.com/vi/H3lH_ozz0hU/maxresdefault.jpg",
+    gradient:
+      "linear-gradient(135deg, #1c1917 0%, #7f1d1d 30%, #b45309 60%, #292524 100%)",
   },
   {
     title: "DurhamOne Canada",
     slug: "durhamone",
-    tagline: "Full-stack website and admin platform for a real client",
+    tagline:
+      "A full-stack platform with dynamic content management, built for a real nonprofit client",
     description:
-      "Built through UofT Web Dev Club for DurhamOne Canada. A full-stack website with dynamic embeds, scalable asset storage on Cloudflare R2, and an authenticated admin portal with CRUD operations for content management.",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "Cloudflare R2"],
+      "DurhamONE is a youth-focused nonprofit serving the Durham Region whose mission is to empower youth and families through accessible programs, community events, and spaces. Their existing site was built on WordPress — outdated, not mobile-responsive, and not Francophone-ready. Through UofT's Web Development Club, our team built a full redesign: a modern Next.js platform with six public pages, an authenticated admin portal, social and document embeds, and Vercel deployment at durham1.ca.",
+    tags: ["Next.js", "Prisma", "PostgreSQL", "Cloudflare R2", "Vercel"],
     bullets: [
-      "Building a full-stack website for DurhamOne Canada using Next.js, Prisma, and PostgreSQL, including dynamic embeds and scalable asset storage via Cloudflare R2.",
-      "Developed authenticated admin portal with CRUD operations for content management, integrating Canva and Instagram APIs for dynamic updates.",
+      "Built a full site redesign and SSR platform via Next.js for a youth nonprofit, replacing an outdated WordPress site with a modern, Francophone-ready responsive UI.",
+      "Developed an auth-protected admin CRUD portal for non-technical staff to manage content, with Canva and Instagram API integrations for dynamic social and document embeds.",
+      "Engineered scalable asset storage on Cloudflare R2 and deployed the platform on Vercel at durham1.ca across six public pages: Home, Events, About Us, Partners, Reports, and Social.",
     ],
     cta: "Get in touch",
     href: "/contact",
     event: "UofT Web Dev Club",
+    gradient:
+      "linear-gradient(135deg, #052e16 0%, #166534 35%, #15803d 65%, #0f172a 100%)",
   },
   {
     title: "Weather2Wear",
     slug: "weather2wear",
-    tagline: "Weather-based outfit recommendation application",
+    tagline:
+      "An intelligent outfit recommendation engine driven by real-time weather data",
     description:
-      "An application that integrates real-time and multi-day weather forecasts from external APIs to generate clothing recommendations based on temperature, precipitation, and wind conditions.",
+      "Weather2Wear bridges the gap between your weather app and your wardrobe. The application pulls real-time and multi-day forecasts from external APIs, then generates contextual clothing recommendations based on temperature, precipitation, and wind conditions — so you step outside prepared, not surprised.",
     tags: ["Java"],
     bullets: [
       "Developed a weather-driven outfit recommendation application by integrating real-time and multi-day forecasts from external weather APIs.",
@@ -91,6 +135,9 @@ export const projects: Project[] = [
     ],
     cta: "View project",
     href: "#",
+    repo: "https://github.com/Sketchy2/team-project-CSC207",
+    gradient:
+      "linear-gradient(135deg, #0c1445 0%, #1e3a8a 35%, #3b82f6 65%, #1e293b 100%)",
   },
 ];
 
@@ -121,11 +168,16 @@ export const strategyItems: StrategyItem[] = [
       "Conducted SWOT and VRIO analyses, utilizing statistical hypothesis testing and standard deviation to isolate market gaps, project ROI, and define highly targeted primary/secondary markets.",
       "Co-authored an executive presentation and go-to-market report, detailing a 5-year implementation timeline, KPI tracking, and a comprehensive Risk Scoring Matrix to mitigate internal/external launch threats.",
     ],
-    tags: ["Competitor Analysis", "SWOT/VRIO", "Go-to-Market Strategy", "Financial Modeling"],
+    tags: [
+      "Competitor Analysis",
+      "SWOT/VRIO",
+      "Go-to-Market Strategy",
+      "Financial Modeling",
+    ],
   },
   {
     title: "National Case Competition",
-    role: "Delegate — \"The Ridge Reset\" Strategy",
+    role: 'Delegate — "The Ridge Reset" Strategy',
     org: "NCC25 — Over the Ridge Roasters",
     period: "May 2025",
     location: "Toronto, ON",
@@ -170,7 +222,7 @@ export const experiences: Experience[] = [
   {
     title: "Turnkey Systems",
     role: "Software Engineering Intern",
-    period: "May 2025 — Present",
+    period: "May 2025 — Aug 2025",
     location: "Beirut, Lebanon",
     bullets: [
       "Reduced financial reporting time by 60% by developing an NLP-powered chatbot (spaCy, Flask) that processes natural-language queries over 100K+ client transactions.",
@@ -211,12 +263,6 @@ export const education: Education[] = [
       "Coursework: Data Structures & Algorithms, Software Design, OOP, Theory of Computation, Computer Organization, Discrete Mathematics, Microeconomics, Macroeconomics",
     ],
   },
-  {
-    school: "Collège Notre Dame De Jamhour",
-    degree: "High School Diploma — Mathematics & Economics",
-    period: "Graduated Jun 2024",
-    details: ["First Prize for Academic Excellence"],
-  },
 ];
 
 // ─── Leadership & Activities ───
@@ -230,6 +276,15 @@ export type Activity = {
 };
 
 export const activities: Activity[] = [
+  {
+    title: "Student Consultant",
+    role: "Student Consultant",
+    org: "Viridian Management Consulting",
+    period: "Sep 2025 — Present",
+    bullets: [
+      "Working on client engagements involving competitor analysis, market sizing, and go-to-market strategy with a student consulting team.",
+    ],
+  },
   {
     title: "Web Developer",
     role: "Web Developer",
@@ -250,30 +305,47 @@ export const activities: Activity[] = [
   },
 ];
 
+// ─── Club Memberships ───
+
+export const clubs = [
+  "Viridian Management Consulting",
+  "UofT Web Dev Club",
+  "Claude Builder Club",
+  "Lebanese Student Association",
+];
+
 // ─── Skills ───
 
 export const skillGroups = [
   {
     title: "Languages",
-    skills: ["Java", "Python", "TypeScript", "JavaScript", "SQL", "R"],
+    skills: ["Java", "Python", "C++", "TypeScript", "JavaScript", "SQL", "R"],
   },
   {
     title: "Frameworks",
-    skills: ["React", "Next.js", "FastAPI", "Flask", "Tailwind CSS", "Spring Boot"],
+    skills: [
+      "React",
+      "Next.js",
+      "FastAPI",
+      "Flask",
+      "Tailwind CSS",
+      "Spring Boot",
+    ],
   },
   {
     title: "Tools & Platforms",
-    skills: ["Git", "Docker", "Supabase", "PostgreSQL", "Postman", "PowerBI", "Figma"],
+    skills: [
+      "Git",
+      "Docker",
+      "Supabase",
+      "PostgreSQL",
+      "Postman",
+      "PowerBI",
+      "Figma",
+    ],
   },
 ];
 
-// ─── Stats ───
-
-export const heroStats = [
-  { value: "3.87", label: "CGPA" },
-  { value: "100K+", label: "Transactions Processed" },
-  { value: "5,000+", label: "Books Distributed" },
-];
 
 // ─── Social ───
 
