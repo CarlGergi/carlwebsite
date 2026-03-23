@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { Magnetic } from "@/components/ui/magnetic";
 
 const letterVariants = {
   hidden: { y: 80, opacity: 0 },
@@ -75,7 +76,7 @@ export function HeroSection() {
           </motion.div>
 
           {/* Name */}
-          <h1 className="relative font-display text-[clamp(2.5rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
+          <h1 className="text-shimmer relative font-display text-[clamp(2.5rem,8vw,6rem)] font-bold leading-[0.95] tracking-tight">
             <AnimatedLine text="Carl Gergi." startIndex={0} />
           </h1>
 
@@ -132,6 +133,7 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.7, duration: 0.7 }}
           >
+            <Magnetic strength={0.2}>
             <Link
               href="/projects"
               data-hover
@@ -154,6 +156,8 @@ export function HeroSection() {
                 />
               </svg>
             </Link>
+            </Magnetic>
+            <Magnetic strength={0.2}>
             <Link
               href="/contact"
               data-hover
@@ -161,6 +165,7 @@ export function HeroSection() {
             >
               Get in touch
             </Link>
+            </Magnetic>
           </motion.div>
 
           {/* Social links */}

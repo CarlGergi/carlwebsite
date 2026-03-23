@@ -51,26 +51,6 @@ export const projects: Project[] = [
       "linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #312e81 65%, #1e3a5f 100%)",
   },
   {
-    title: "Auri",
-    slug: "auri",
-    tagline:
-      "A conversational AI concierge that reimagines the hotel guest experience from check-in to checkout",
-    description:
-      "What if checking into a hotel felt like talking to a friend? Auri is a conversational AI agent that manages the entire guest journey — check-in, ID verification, payments, and room requests — across emails, kiosks, calls, and messaging. Built for the TechTO Hackathon, where we delivered a working POC with sub-500ms voice latency and were selected as finalists.",
-    tags: ["React", "Tailwind", "WebSockets", "ElevenLabs"],
-    bullets: [
-      "Built a conversational AI agent that adds a new dimension to hospitality — guests simply talk, and the agent handles check-in, ID verification, payments, and in-stay requests end-to-end.",
-      "Implemented multilingual support across multiple mediums including emails, kiosks, phone calls, and messaging for seamless guest communication.",
-      "Delivered a real-time audio pipeline using WebSockets to stream speech to the LLM and back with under 500ms latency, and demoed a working proof of concept.",
-    ],
-    cta: "Visit the site",
-    href: "https://loud-tweak-592173.framer.app/",
-    event: "TechTO Hackathon — Finalist",
-    repo: "https://github.com/CarlGergi/auri",
-    gradient:
-      "linear-gradient(135deg, #022c22 0%, #064e3b 35%, #0d9488 65%, #134e4a 100%)",
-  },
-  {
     title: "TD Threat Denied",
     slug: "td-threat-denied",
     tagline:
@@ -103,17 +83,47 @@ export const projects: Project[] = [
       "linear-gradient(135deg, #1c1917 0%, #7f1d1d 30%, #b45309 60%, #292524 100%)",
   },
   {
+    title: "Auri",
+    slug: "auri",
+    tagline:
+      "A conversational AI concierge that reimagines the hotel guest experience from check-in to checkout",
+    description:
+      "What if checking into a hotel felt like talking to a friend? Auri is a conversational AI agent that manages the entire guest journey — check-in, ID verification, payments, and room requests — across emails, kiosks, calls, and messaging. Built for the TechTO Hackathon, where we delivered a working POC with sub-500ms voice latency and were selected as finalists.",
+    tags: ["React", "TypeScript", "Vite", "ElevenLabs", "Tailwind CSS", "WebSockets"],
+    bullets: [
+      "Built a conversational AI agent that adds a new dimension to hospitality — guests simply talk, and the agent handles check-in, ID verification, payments, and in-stay requests end-to-end.",
+      "Implemented multilingual support across multiple mediums including emails, kiosks, phone calls, and messaging for seamless guest communication.",
+      "Delivered a real-time audio pipeline using WebSockets to stream speech to the LLM and back with under 500ms latency, and demoed a working proof of concept.",
+    ],
+    cta: "Visit the site",
+    href: "https://loud-tweak-592173.framer.app/",
+    event: "TechTO Hackathon — Finalist",
+    repo: "https://github.com/CarlGergi/auri",
+    gradient:
+      "linear-gradient(135deg, #022c22 0%, #064e3b 35%, #0d9488 65%, #134e4a 100%)",
+  },
+  {
     title: "DurhamOne Canada",
     slug: "durhamone",
     tagline:
       "A full-stack platform with dynamic content management, built for a real nonprofit client",
     description:
       "DurhamONE is a youth-focused nonprofit serving the Durham Region whose mission is to empower youth and families through accessible programs, community events, and spaces. Their existing site was built on WordPress — outdated, not mobile-responsive, and not Francophone-ready. Through UofT's Web Development Club, our team built a full redesign: a modern Next.js platform with six public pages, an authenticated admin portal, social and document embeds, and Vercel deployment at durham1.ca.",
-    tags: ["Next.js", "Prisma", "PostgreSQL", "Cloudflare R2", "Vercel"],
+    tags: [
+      "Next.js",
+      "TypeScript",
+      "Prisma",
+      "Neon",
+      "NextAuth.js",
+      "UploadThing",
+      "Emotion",
+      "Ionicons",
+      "Vercel",
+    ],
     bullets: [
       "Built a full site redesign and SSR platform via Next.js for a youth nonprofit, replacing an outdated WordPress site with a modern, Francophone-ready responsive UI.",
       "Developed an auth-protected admin CRUD portal for non-technical staff to manage content, with Canva and Instagram API integrations for dynamic social and document embeds.",
-      "Engineered scalable asset storage on Cloudflare R2 and deployed the platform on Vercel at durham1.ca across six public pages: Home, Events, About Us, Partners, Reports, and Social.",
+      "Engineered file uploads with UploadThing and deployed the platform on Vercel at durham1.ca across six public pages: Home, Events, About Us, Partners, Reports, and Social.",
     ],
     cta: "Get in touch",
     href: "/contact",
@@ -127,8 +137,9 @@ export const projects: Project[] = [
     tagline:
       "An intelligent outfit recommendation engine driven by real-time weather data",
     description:
-      "Weather2Wear bridges the gap between your weather app and your wardrobe. The application pulls real-time and multi-day forecasts from external APIs, then generates contextual clothing recommendations based on temperature, precipitation, and wind conditions — so you step outside prepared, not surprised.",
+      "Built as a team project for CSC207 (Software Design) at the University of Toronto. Weather2Wear bridges the gap between your weather app and your wardrobe — it pulls real-time and multi-day forecasts from external APIs, then generates contextual clothing recommendations based on temperature, precipitation, and wind conditions.",
     tags: ["Java"],
+    event: "CSC207 — UofT",
     bullets: [
       "Developed a weather-driven outfit recommendation application by integrating real-time and multi-day forecasts from external weather APIs.",
       "Generated clothing suggestions based on temperature, precipitation, and wind conditions to help users dress appropriately.",
@@ -295,12 +306,12 @@ export const activities: Activity[] = [
     ],
   },
   {
-    title: "Co-Founder & Project Lead",
-    role: "Co-Founder & Project Lead",
+    title: "The Young Readers Society",
+    role: "Member",
     org: "The Young Readers Society",
     period: "Jun 2023 — Aug 2024",
     bullets: [
-      "Co-founded a nonprofit distributing 5,000+ books; developed inventory tracking systems for 20+ volunteers and was featured on national television.",
+      "Part of a nonprofit that distributed 5,000+ books to underserved communities, helping coordinate inventory tracking for 20+ volunteers. The initiative was featured on national television.",
     ],
   },
 ];

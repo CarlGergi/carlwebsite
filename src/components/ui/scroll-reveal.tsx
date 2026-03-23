@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode } from "react";
+import { ReactNode, useEffect, useState } from "react";
 
 type ScrollRevealProps = {
   children: ReactNode;
@@ -25,17 +25,26 @@ export function ScrollReveal({
   direction = "up",
   distance = 40,
 }: ScrollRevealProps) {
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsMobile(window.innerWidth < 768);
+  }, []);
+
   const d = directionMap[direction];
+  const dist = isMobile ? Math.min(distance, 20) : distance;
+  const dur = isMobile ? 0.5 : 0.7;
+  const del = isMobile ? Math.min(delay, 0.1) : delay;
 
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, x: d.x * distance, y: d.y * distance }}
+      initial={{ opacity: 0, x: d.x * dist, y: d.y * dist }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-60px" }}
+      viewport={{ once: true, margin: "-40px" }}
       transition={{
-        duration: 0.7,
-        delay,
+        duration: dur,
+        delay: del,
         ease: [0.16, 1, 0.3, 1],
       }}
     >

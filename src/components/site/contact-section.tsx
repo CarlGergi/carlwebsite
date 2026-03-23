@@ -1,9 +1,41 @@
 "use client";
 
+import { useState, type FormEvent } from "react";
 import { socialLinks } from "@/data/site-content";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
+type Status = "idle" | "sending" | "sent" | "error";
+
 export function ContactSection() {
+  const [status, setStatus] = useState<Status>("idle");
+
+  async function handleSubmit(e: FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setStatus("sending");
+
+    const fd = new FormData(e.currentTarget);
+    const body = {
+      name: fd.get("name"),
+      email: fd.get("email"),
+      subject: fd.get("subject"),
+      message: fd.get("message"),
+    };
+
+    try {
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body),
+      });
+
+      if (!res.ok) throw new Error("Request failed");
+      setStatus("sent");
+      (e.target as HTMLFormElement).reset();
+    } catch {
+      setStatus("error");
+    }
+  }
+
   return (
     <section className="section-spacing">
       <div className="container-shell">
@@ -68,14 +100,16 @@ export function ContactSection() {
           {/* Right - form */}
           <ScrollReveal delay={0.2}>
             <div className="gradient-border card p-6 md:p-8">
-              <form>
+              <form onSubmit={handleSubmit}>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
                     <span className="mb-1.5 block text-sm font-medium text-text">
                       Name
                     </span>
                     <input
+                      name="name"
                       type="text"
+                      required
                       placeholder="Your name"
                       className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
                     />
@@ -85,7 +119,9 @@ export function ContactSection() {
                       Email
                     </span>
                     <input
+                      name="email"
                       type="email"
+                      required
                       placeholder="you@company.com"
                       className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
                     />
@@ -96,7 +132,10 @@ export function ContactSection() {
                   <span className="mb-1.5 block text-sm font-medium text-text">
                     What&apos;s this about?
                   </span>
-                  <select className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10">
+                  <select
+                    name="subject"
+                    className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
+                  >
                     <option>Internship opportunity</option>
                     <option>Project collaboration</option>
                     <option>Hackathon team</option>
@@ -109,7 +148,9 @@ export function ContactSection() {
                     Message
                   </span>
                   <textarea
+                    name="message"
                     rows={5}
+                    required
                     placeholder="Tell me about the opportunity or idea..."
                     className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
                   />
@@ -117,11 +158,23 @@ export function ContactSection() {
 
                 <button
                   type="submit"
+                  disabled={status === "sending"}
                   data-hover
-                  className="btn-glow mt-6 w-full rounded-xl bg-gradient-to-r from-accent to-accent-cyan py-3.5 text-sm font-semibold text-white transition-all hover:shadow-lg"
+                  className="btn-glow mt-6 w-full rounded-xl bg-gradient-to-r from-accent to-accent-cyan py-3.5 text-sm font-semibold text-white transition-all hover:shadow-lg disabled:opacity-60"
                 >
-                  Send message
+                  {status === "sending" ? "Sending..." : "Send message"}
                 </button>
+
+                {status === "sent" && (
+                  <p className="mt-3 text-center text-sm font-medium text-green-400">
+                    Message sent — I&apos;ll get back to you soon!
+                  </p>
+                )}
+                {status === "error" && (
+                  <p className="mt-3 text-center text-sm font-medium text-red-400">
+                    Something went wrong. Try emailing me directly.
+                  </p>
+                )}
               </form>
             </div>
           </ScrollReveal>

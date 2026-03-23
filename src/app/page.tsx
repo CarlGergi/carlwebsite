@@ -6,6 +6,7 @@ import { PageShell } from "@/components/site/page-shell";
 import { projects, strategyItems, experiences } from "@/data/site-content";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Marquee } from "@/components/ui/marquee";
+import { SpotlightCard } from "@/components/ui/spotlight-card";
 
 const allSkills = [
   "React",
@@ -52,10 +53,11 @@ export default function Home() {
           <div className="grid gap-4 md:grid-cols-3">
             {/* Development — spans 2 cols */}
             <ScrollReveal delay={0.1} className="md:col-span-2">
+              <SpotlightCard className="gradient-border gradient-border-hover card h-full rounded-[1.25rem]">
               <Link
                 href="/projects"
                 data-hover
-                className="gradient-border gradient-border-hover card group block h-full overflow-hidden p-6 md:p-8"
+                className="group block h-full overflow-hidden p-6 md:p-8"
               >
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-accent/[0.08] bg-accent/[0.06]">
                   <svg
@@ -110,14 +112,16 @@ export default function Home() {
                   </svg>
                 </span>
               </Link>
+              </SpotlightCard>
             </ScrollReveal>
 
             {/* About — CS + Econ */}
             <ScrollReveal delay={0.15}>
+              <SpotlightCard className="gradient-border gradient-border-hover card h-full rounded-[1.25rem]">
               <Link
                 href="/about"
                 data-hover
-                className="gradient-border gradient-border-hover card group block h-full overflow-hidden p-6 md:p-8"
+                className="group block h-full overflow-hidden p-6 md:p-8"
               >
                 <p className="font-display text-lg font-bold leading-snug text-text md:text-xl">
                   CS and Economics, with an AI focus.{" "}
@@ -147,14 +151,16 @@ export default function Home() {
                   </svg>
                 </span>
               </Link>
+              </SpotlightCard>
             </ScrollReveal>
 
             {/* Experience snapshot */}
             <ScrollReveal delay={0.2}>
+              <SpotlightCard className="gradient-border gradient-border-hover card h-full rounded-[1.25rem]">
               <Link
                 href="/experience"
                 data-hover
-                className="gradient-border gradient-border-hover card group block h-full overflow-hidden p-6 md:p-8"
+                className="group block h-full overflow-hidden p-6 md:p-8"
               >
                 <div className="mb-3 flex items-center gap-2">
                   <span className="dot-accent" />
@@ -193,14 +199,16 @@ export default function Home() {
                   </svg>
                 </span>
               </Link>
+              </SpotlightCard>
             </ScrollReveal>
 
             {/* Consulting — spans 2 cols */}
             <ScrollReveal delay={0.25} className="md:col-span-2">
+              <SpotlightCard className="gradient-border gradient-border-hover card h-full rounded-[1.25rem]">
               <Link
                 href="/consulting"
                 data-hover
-                className="gradient-border gradient-border-hover card group block h-full overflow-hidden p-6 md:p-8"
+                className="group block h-full overflow-hidden p-6 md:p-8"
               >
                 <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg border border-accent/[0.08] bg-accent/[0.06]">
                   <svg
@@ -255,6 +263,7 @@ export default function Home() {
                   </svg>
                 </span>
               </Link>
+              </SpotlightCard>
             </ScrollReveal>
           </div>
         </div>

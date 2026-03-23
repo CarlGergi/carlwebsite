@@ -1,11 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Link from "next/link";
 import { PageShell } from "@/components/site/page-shell";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 import { Marquee } from "@/components/ui/marquee";
-import { skillGroups, socialLinks } from "@/data/site-content";
+import { skillGroups } from "@/data/site-content";
 import { motion } from "framer-motion";
 
 const allSkills = skillGroups.flatMap((g) => g.skills);
@@ -172,47 +171,39 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* ── Looking for ── */}
-      <section className="container-shell pb-16 md:pb-20">
+      {/* ── Beyond the code ── */}
+      <section className="container-shell pb-12 md:pb-16">
         <div className="mx-auto max-w-4xl">
           <ScrollReveal>
-            <div className="gradient-border p-6 text-center md:p-10">
-              <p className="mx-auto max-w-lg font-display text-xl font-bold text-text md:text-2xl">
-                I&apos;m looking for internship opportunities.
+            <div className="mb-8 flex items-center gap-2.5">
+              <span className="dot-accent" />
+              <h2 className="text-xs font-semibold uppercase tracking-widest text-text-muted">
+                Beyond the code
+              </h2>
+            </div>
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <div className="card p-6 md:p-8">
+              <p className="text-sm leading-relaxed text-text-muted sm:text-base">
+                Outside of school and work, I enjoy playing football, tennis,
+                and padel, and I go skiing whenever I get the chance.
               </p>
-              <p className="mx-auto mt-3 max-w-md text-sm leading-relaxed text-text-muted">
-                Software engineering, product development, or quantitative roles
-                where I can apply both my technical and analytical background.
-              </p>
-              <div className="mt-6 flex flex-wrap justify-center gap-3">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={
-                      link.href.startsWith("http") ? "_blank" : undefined
-                    }
-                    rel={
-                      link.href.startsWith("http") ? "noreferrer" : undefined
-                    }
-                    data-hover
-                    className="tag-pill"
+              <div className="mt-5 flex flex-wrap gap-2">
+                {["Football", "Tennis", "Padel", "Skiing"].map((sport) => (
+                  <span
+                    key={sport}
+                    className="tag-pill hover-lift"
                   >
-                    {link.label}
-                  </a>
+                    {sport}
+                  </span>
                 ))}
               </div>
-              <Link
-                href="/contact"
-                data-hover
-                className="btn-glow mt-6 inline-flex items-center gap-2 rounded-full bg-gradient-to-r from-accent to-accent-cyan px-7 py-3.5 text-sm font-semibold text-white"
-              >
-                Get in touch
-              </Link>
             </div>
           </ScrollReveal>
         </div>
       </section>
+
     </PageShell>
   );
 }
