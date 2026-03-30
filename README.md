@@ -1,6 +1,6 @@
 <div align="center">
 
-# carlgergi.com
+# carlgergi.vercel.app
 
 My personal website — built to showcase my work, experience, and projects.
 
@@ -8,6 +8,7 @@ My personal website — built to showcase my work, experience, and projects.
 [![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=000)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=fff)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-06B6D4?style=flat-square&logo=tailwindcss&logoColor=fff)](https://tailwindcss.com/)
+[![Deployed on Vercel](https://img.shields.io/badge/Vercel-Deployed-000?style=flat-square&logo=vercel)](https://carlgergi.vercel.app)
 
 </div>
 
