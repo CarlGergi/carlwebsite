@@ -116,9 +116,9 @@ export function HeroSection() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 1.5, duration: 0.6 }}
           >
-            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/[0.10] px-3 py-1 text-[12px] font-semibold tracking-wide text-accent-hover">
-              <span className="h-2 w-2 rounded-full bg-accent-hover" />
-              Software Developer Intern · Deloitte · Summer 2026
+            <span className="inline-flex max-w-full flex-wrap items-center gap-2 rounded-full border border-accent/30 bg-accent/[0.10] px-3 py-1 text-[11px] font-semibold tracking-wide text-accent-hover sm:text-[12px]">
+              <span className="h-2 w-2 shrink-0 rounded-full bg-accent-hover" />
+              <span>Software Developer Intern · Deloitte · Summer 2026</span>
             </span>
           </motion.div>
 

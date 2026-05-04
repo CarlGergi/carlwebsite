@@ -79,7 +79,7 @@ export default function ProjectsPage() {
                       </div>
 
                       {/* Row 3: Tags + links */}
-                      <div className="mt-5 flex flex-wrap items-center justify-between gap-x-5 gap-y-3">
+                      <div className="mt-5 flex flex-col items-start gap-y-3 sm:flex-row sm:flex-wrap sm:items-center sm:justify-between sm:gap-x-5">
                         <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
                           <div className="flex flex-wrap gap-1.5">
                             {project.tags.slice(0, 5).map((tag) => (
