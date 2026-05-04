@@ -109,12 +109,25 @@ export function HeroSection() {
             compete at hackathons, and take on consulting projects.
           </motion.p>
 
-          {/* Achievement badges */}
+          {/* Incoming role pill */}
           <motion.div
-            className="mt-5 flex flex-wrap gap-2"
+            className="mt-5"
             initial={{ opacity: 0, y: 15 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 1.55, duration: 0.6 }}
+            transition={{ delay: 1.5, duration: 0.6 }}
+          >
+            <span className="inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/[0.10] px-3 py-1 text-[12px] font-semibold tracking-wide text-accent-hover">
+              <span className="h-2 w-2 rounded-full bg-accent-hover" />
+              Software Developer Intern · Deloitte · Summer 2026
+            </span>
+          </motion.div>
+
+          {/* Achievement badges */}
+          <motion.div
+            className="mt-3 flex flex-wrap gap-2"
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 1.6, duration: 0.6 }}
           >
             {achievements.map((badge) => (
               <span

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, type FormEvent } from "react";
+import { useRef, useState, type FormEvent } from "react";
 import { socialLinks } from "@/data/site-content";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
@@ -9,6 +9,7 @@ type Status = "idle" | "sending" | "sent" | "error";
 export function ContactSection() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const loadedAt = useRef<number>(Date.now());
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -22,6 +23,8 @@ export function ContactSection() {
       email: fd.get("email"),
       subject: fd.get("subject"),
       message: fd.get("message"),
+      website: fd.get("website"),
+      loadedAt: loadedAt.current,
     };
 
     try {
@@ -114,6 +117,28 @@ export function ContactSection() {
           <ScrollReveal delay={0.2}>
             <div className="gradient-border card p-6 md:p-8">
               <form onSubmit={handleSubmit}>
+                <div
+                  aria-hidden="true"
+                  style={{
+                    position: "absolute",
+                    left: "-10000px",
+                    top: "auto",
+                    width: "1px",
+                    height: "1px",
+                    overflow: "hidden",
+                  }}
+                >
+                  <label>
+                    Website
+                    <input
+                      name="website"
+                      type="text"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      defaultValue=""
+                    />
+                  </label>
+                </div>
                 <div className="grid gap-4 sm:grid-cols-2">
                   <label className="block">
                     <span className="mb-1.5 block text-sm font-medium text-text">
@@ -123,6 +148,7 @@ export function ContactSection() {
                       name="name"
                       type="text"
                       required
+                      maxLength={100}
                       placeholder="Your name"
                       className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
                     />
@@ -135,6 +161,7 @@ export function ContactSection() {
                       name="email"
                       type="email"
                       required
+                      maxLength={200}
                       placeholder="you@company.com"
                       className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
                     />
@@ -164,6 +191,7 @@ export function ContactSection() {
                     name="message"
                     rows={5}
                     required
+                    maxLength={5000}
                     placeholder="Tell me about the opportunity or idea..."
                     className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
                   />

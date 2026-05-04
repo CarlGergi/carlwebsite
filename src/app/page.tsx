@@ -45,7 +45,9 @@ export default function Home() {
               </p>
               <h2 className="mx-auto max-w-2xl font-display text-3xl font-bold tracking-tight text-text sm:text-4xl md:text-5xl">
                 I build software{" "}
-                <span className="gradient-text">and solve problems.</span>
+                <span className="gradient-text">
+                  that solves real problems.
+                </span>
               </h2>
             </div>
           </ScrollReveal>
