@@ -8,12 +8,15 @@ type Status = "idle" | "sending" | "sent" | "error";
 
 export function ContactSection() {
   const [status, setStatus] = useState<Status>("idle");
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setStatus("sending");
+    setErrorMessage(null);
 
-    const fd = new FormData(e.currentTarget);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
     const body = {
       name: fd.get("name"),
       email: fd.get("email"),
@@ -28,10 +31,20 @@ export function ContactSection() {
         body: JSON.stringify(body),
       });
 
-      if (!res.ok) throw new Error("Request failed");
+      const data = (await res.json().catch(() => null)) as
+        | { success?: boolean; error?: string }
+        | null;
+
+      if (!res.ok || !data?.success) {
+        setErrorMessage(data?.error ?? "Request failed");
+        setStatus("error");
+        return;
+      }
+
       setStatus("sent");
-      (e.target as HTMLFormElement).reset();
+      form.reset();
     } catch {
+      setErrorMessage("Network error — please try again.");
       setStatus("error");
     }
   }
@@ -172,7 +185,8 @@ export function ContactSection() {
                 )}
                 {status === "error" && (
                   <p className="mt-3 text-center text-sm font-medium text-red-400">
-                    Something went wrong. Try emailing me directly.
+                    {errorMessage ?? "Something went wrong."} Try emailing me
+                    directly.
                   </p>
                 )}
               </form>
