@@ -19,6 +19,37 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "Argus",
+    slug: "argus",
+    tagline:
+      "An intelligence service of one — a multi-agent pipeline that files a 90-second competitive briefing to your inbox every morning",
+    description:
+      "Most competitive intelligence is a tab you forget to open. Argus is the opposite — a self-hosted, single-user system that wakes up every morning, researches your tracked competitors across nine source types, and delivers a newsroom-style briefing before you've finished coffee. A ten-minute onboarding builds a \"company brain\" (ICP, strategic bets, weaknesses), and from then on an eight-stage pipeline runs autonomously: collect → extract → pattern-detect → score for salience → draft → critique → write → deliver.",
+    tags: [
+      "Next.js 15",
+      "React 19",
+      "FastAPI",
+      "Postgres",
+      "pgvector",
+      "Claude API",
+      "OpenAI Embeddings",
+      "Playwright",
+      "Resend",
+    ],
+    bullets: [
+      "Designed an eight-stage autonomous pipeline that pulls fresh content nightly from careers pages, press releases, GitHub, news, SEC filings, Reddit/HN, app stores, Product Hunt, and Wayback diffs — deduplicated at the DB layer via content hashing so daily runs settle to about a minute.",
+      "Orchestrated five Claude tiers per their strengths — Haiku for high-volume signal extraction, Sonnet for cross-time pattern detection over a rolling 180-day window, and Opus for a strategist/adversarial-critic pair that drafts and prunes brief items before the final writer composes prose.",
+      "Built a salience engine that embeds every signal and scores it against the company brain via cosine similarity, plus a weekly Learning Agent that ingests per-item feedback (useful / noise / wrong / missed) and adjusts the weights so the briefing sharpens over time.",
+      "Shipped the full product surface end-to-end: onboarding chat, daily brief, historical archive, an Ask-Argus chat over signals + briefs + brain, settings to edit the brain and watchlist, plus the FastAPI + APScheduler worker and Resend delivery layer.",
+    ],
+    cta: "View on GitHub",
+    href: "https://github.com/CarlGergi/ArgusAI",
+    event: "Personal Project",
+    repo: "https://github.com/CarlGergi/ArgusAI",
+    gradient:
+      "linear-gradient(135deg, #0b1220 0%, #1e293b 30%, #334155 60%, #0f172a 100%)",
+  },
+  {
     title: "Finora",
     slug: "finora",
     tagline:
