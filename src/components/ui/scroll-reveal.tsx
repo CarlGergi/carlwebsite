@@ -1,52 +1,30 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { ReactNode, useEffect, useState } from "react";
+import { ReactNode } from "react";
 
 type ScrollRevealProps = {
   children: ReactNode;
   className?: string;
   delay?: number;
-  direction?: "up" | "down" | "left" | "right";
-  distance?: number;
 };
 
-const directionMap = {
-  up: { y: 1, x: 0 },
-  down: { y: -1, x: 0 },
-  left: { x: 1, y: 0 },
-  right: { x: -1, y: 0 },
-};
-
+/**
+ * Signature reveal: content rises, sharpens out of a soft blur, and settles —
+ * like it's coming into focus as you reach it.
+ */
 export function ScrollReveal({
   children,
   className,
   delay = 0,
-  direction = "up",
-  distance = 40,
 }: ScrollRevealProps) {
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    setIsMobile(window.innerWidth < 768);
-  }, []);
-
-  const d = directionMap[direction];
-  const dist = isMobile ? Math.min(distance, 20) : distance;
-  const dur = isMobile ? 0.5 : 0.7;
-  const del = isMobile ? Math.min(delay, 0.1) : delay;
-
   return (
     <motion.div
       className={className}
-      initial={{ opacity: 0, x: d.x * dist, y: d.y * dist }}
-      whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, margin: "-40px" }}
-      transition={{
-        duration: dur,
-        delay: del,
-        ease: [0.16, 1, 0.3, 1],
-      }}
+      initial={{ opacity: 0, y: 24, scale: 0.985, filter: "blur(6px)" }}
+      whileInView={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+      viewport={{ once: true, margin: "-60px" }}
+      transition={{ duration: 0.7, delay, ease: [0.21, 0.47, 0.32, 0.98] }}
     >
       {children}
     </motion.div>
