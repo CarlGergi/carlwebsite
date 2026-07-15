@@ -14,7 +14,6 @@ export type Project = {
   demo?: string;
   devpost?: string;
   image?: string;
-  gradient: string;
 };
 
 export const projects: Project[] = [
@@ -46,8 +45,7 @@ export const projects: Project[] = [
     href: "https://github.com/CarlGergi/ArgusAI",
     event: "Personal Project",
     repo: "https://github.com/CarlGergi/ArgusAI",
-    gradient:
-      "linear-gradient(135deg, #0b1220 0%, #1e293b 30%, #334155 60%, #0f172a 100%)",
+    image: "/projects/argus.png",
   },
   {
     title: "Finora",
@@ -78,8 +76,6 @@ export const projects: Project[] = [
     demo: "https://youtu.be/zAN5Ru6b67E",
     devpost: "https://devpost.com/software/finora-ifouqv",
     image: "https://img.youtube.com/vi/zAN5Ru6b67E/maxresdefault.jpg",
-    gradient:
-      "linear-gradient(135deg, #0f172a 0%, #1e1b4b 35%, #312e81 65%, #1e3a5f 100%)",
   },
   {
     title: "TD Threat Denied",
@@ -110,8 +106,6 @@ export const projects: Project[] = [
     demo: "https://www.youtube.com/watch?v=H3lH_ozz0hU",
     devpost: "https://devpost.com/software/td-threat-denied",
     image: "https://img.youtube.com/vi/H3lH_ozz0hU/maxresdefault.jpg",
-    gradient:
-      "linear-gradient(135deg, #1c1917 0%, #7f1d1d 30%, #b45309 60%, #292524 100%)",
   },
   {
     title: "Auri",
@@ -130,8 +124,7 @@ export const projects: Project[] = [
     href: "https://loud-tweak-592173.framer.app/",
     event: "TechTO Hackathon — Finalist",
     repo: "https://github.com/CarlGergi/auri",
-    gradient:
-      "linear-gradient(135deg, #022c22 0%, #064e3b 35%, #0d9488 65%, #134e4a 100%)",
+    image: "/projects/auri.png",
   },
   {
     title: "DurhamOne Canada",
@@ -156,11 +149,10 @@ export const projects: Project[] = [
       "Developed an auth-protected admin CRUD portal for non-technical staff to manage content, with Canva and Instagram API integrations for dynamic social and document embeds.",
       "Engineered file uploads with UploadThing and deployed the platform on Vercel at durham1.ca across six public pages: Home, Events, About Us, Partners, Reports, and Social.",
     ],
-    cta: "Get in touch",
-    href: "/contact",
+    cta: "Visit the site",
+    href: "https://durham1.ca/",
     event: "UofT Web Dev Club",
-    gradient:
-      "linear-gradient(135deg, #052e16 0%, #166534 35%, #15803d 65%, #0f172a 100%)",
+    image: "/projects/durham1.png",
   },
   {
     title: "Weather2Wear",
@@ -178,8 +170,6 @@ export const projects: Project[] = [
     cta: "View project",
     href: "#",
     repo: "https://github.com/Sketchy2/team-project-CSC207",
-    gradient:
-      "linear-gradient(135deg, #0c1445 0%, #1e3a8a 35%, #3b82f6 65%, #1e293b 100%)",
   },
 ];
 
@@ -194,6 +184,10 @@ export type StrategyItem = {
   description: string;
   bullets: string[];
   tags: string[];
+  /** Path under /public, e.g. "/logos/oxford.png" — falls back to a monogram */
+  logo?: string;
+  /** Dark-native mark that fills the tile edge-to-edge */
+  logoDark?: boolean;
 };
 
 export const strategyItems: StrategyItem[] = [
@@ -201,8 +195,10 @@ export const strategyItems: StrategyItem[] = [
     title: "Management Consulting",
     role: "Student Consultant",
     org: "Viridian Management Consulting",
-    period: "Sep 2025 — Present",
+    period: "Sep 2025 — May 2026",
     location: "Toronto, ON",
+    logo: "/logos/viridian.png",
+    logoDark: true,
     description:
       "Student consulting group at UofT that works with real clients on market analysis, competitive strategy, and go-to-market planning.",
     bullets: [
@@ -223,6 +219,7 @@ export const strategyItems: StrategyItem[] = [
     org: "NCC25 — Over the Ridge Roasters",
     period: "May 2025",
     location: "Toronto, ON",
+    logo: "/logos/ncc.png",
     description:
       "National case competition focused on developing a sustainability plan for a specialty coffee roaster. Our team addressed packaging waste, carbon emissions, supply chain transparency, and Gen Z engagement with detailed financial projections.",
     bullets: [
@@ -240,6 +237,7 @@ export const strategyItems: StrategyItem[] = [
     location: "Oxford, UK",
     description:
       "Two-week intensive at Oxford focused on startup strategy, product development, and market analysis. Served as CTO in a 3-person team developing EcoBin+, and presented a full business proposal to a faculty review panel.",
+    logo: "/logos/oxford.png",
     bullets: [
       "Completed a two-week intensive program focused on startup strategy, product development, and market analysis.",
       "Served as CTO in a 3-person team that developed EcoBin+, a smart recycling bin using AI and IoT for automated waste identification and sorting.",
@@ -258,14 +256,29 @@ export type Experience = {
   location: string;
   bullets: string[];
   tags: string[];
+  /** Path under /public, e.g. "/logos/deloitte.png" — falls back to a monogram */
+  logo?: string;
 };
 
 export const experiences: Experience[] = [
+  {
+    title: "Deloitte",
+    role: "Software Developer Intern",
+    period: "May 2026 — Aug 2026",
+    location: "Dubai, UAE",
+    bullets: [
+      "Developing AI and emerging-technology solutions for enterprise clients across the MENA region within Deloitte's technology consulting practice.",
+      "Contributing to engagements at the intersection of AI, risk, and responsible deployment — where advanced systems go from prototype to secure, production-scale delivery.",
+    ],
+    tags: ["AI", "Emerging Tech", "Risk", "Client Delivery"],
+    logo: "/logos/deloitte.png",
+  },
   {
     title: "Turnkey Systems",
     role: "Software Engineering Intern",
     period: "May 2025 — Aug 2025",
     location: "Beirut, Lebanon",
+    logo: "/logos/turnkey.png",
     bullets: [
       "Reduced financial reporting time by 60% by developing an NLP-powered chatbot (spaCy, Flask) that processes natural-language queries over 100K+ client transactions.",
       "Built a Python backend with PostgreSQL integration using SQLAlchemy, enabling intent-based filtering and automated transaction summarization.",
@@ -278,6 +291,7 @@ export const experiences: Experience[] = [
     role: "Project Support Intern",
     period: "Mar 2024",
     location: "Beirut, Lebanon",
+    logo: "/logos/expertise-france.png",
     bullets: [
       "Collaborated with engineering team on web platform redesign, delivering 15+ Figma wireframes and defining component architecture to streamline frontend implementation.",
       "Reduced design-to-dev handoff time by 30% through standardized technical documentation and Agile workflows.",
@@ -293,6 +307,7 @@ export type Education = {
   degree: string;
   period: string;
   details: string[];
+  logo?: string;
 };
 
 export const education: Education[] = [
@@ -300,8 +315,9 @@ export const education: Education[] = [
     school: "University of Toronto",
     degree: "B.Sc. Double Major in Computer Science and Economics — AI Focus",
     period: "2024 — 2028 (Expected)",
+    logo: "/logos/utoronto.png",
     details: [
-      "CGPA: 3.87 — Dean's List Scholar (2024–2025)",
+      "CGPA: 3.87 — 2× Dean's List Scholar (2024–2025 · 2025–2026)",
       "Coursework: Data Structures & Algorithms, Software Design, OOP, Theory of Computation, Computer Organization, Discrete Mathematics, Microeconomics, Macroeconomics",
     ],
   },
@@ -322,7 +338,7 @@ export const activities: Activity[] = [
     title: "Student Consultant",
     role: "Student Consultant",
     org: "Viridian Management Consulting",
-    period: "Sep 2025 — Present",
+    period: "Sep 2025 — May 2026",
     bullets: [
       "Working on client engagements involving competitor analysis, market sizing, and go-to-market strategy with a student consulting team.",
     ],
@@ -331,7 +347,7 @@ export const activities: Activity[] = [
     title: "Web Developer",
     role: "Web Developer",
     org: "UofT Web Dev Club",
-    period: "Sep 2025 — Present",
+    period: "Sep 2025 — May 2026",
     bullets: [
       "Building full-stack client projects with a student dev team using Next.js, Prisma, and PostgreSQL.",
     ],

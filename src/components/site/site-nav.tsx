@@ -1,148 +1,244 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 import {
   motion,
   useScroll,
   useMotionValueEvent,
   AnimatePresence,
 } from "framer-motion";
-import { useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import { ThemeToggle } from "@/components/site/theme-toggle";
 
 const navItems = [
-  { href: "/", label: "Home" },
-  { href: "/about", label: "About" },
-  { href: "/projects", label: "Projects" },
-  { href: "/consulting", label: "Consulting" },
-  { href: "/experience", label: "Experience" },
-  { href: "/contact", label: "Contact" },
+  { id: "home", label: "home" },
+  { id: "projects", label: "projects" },
+  { id: "experience", label: "experience" },
+  { id: "consulting", label: "consulting" },
+  { id: "about", label: "about" },
+  { id: "contact", label: "contact" },
 ];
 
 export function SiteNav() {
-  const pathname = usePathname();
   const { scrollY } = useScroll();
   const [scrolled, setScrolled] = useState(false);
+  const [showTop, setShowTop] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [active, setActive] = useState("home");
+  const hamburgerRef = useRef<HTMLButtonElement>(null);
+  const overlayRef = useRef<HTMLDivElement>(null);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
-    setScrolled(latest > 50);
+    setScrolled(latest > 24);
+    setShowTop(latest > 600);
   });
+
+  // ── Scroll-spy: highlight the section crossing the upper-middle band ──
+  useEffect(() => {
+    const ids = navItems.map((i) => i.id);
+    const els = ids
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+    if (els.length === 0) return; // detail pages have no sections
+
+    const visible = new Set<string>();
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) visible.add(entry.target.id);
+          else visible.delete(entry.target.id);
+        }
+        const topMost = ids.find((id) => visible.has(id));
+        if (topMost) setActive(topMost);
+      },
+      { rootMargin: "-45% 0px -50% 0px", threshold: 0 },
+    );
+    els.forEach((el) => observer.observe(el));
+
+    // Bottom guard: ensure the last section lights up when the page bottoms out
+    const onScroll = () => {
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 4
+      ) {
+        setActive(ids[ids.length - 1]);
+      }
+    };
+    window.addEventListener("scroll", onScroll, { passive: true });
+
+    return () => {
+      observer.disconnect();
+      window.removeEventListener("scroll", onScroll);
+    };
+  }, []);
+
+  // ── Mobile menu: dialog semantics — scroll lock, Escape, focus trap ──
+  useEffect(() => {
+    if (!mobileOpen) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setMobileOpen(false);
+        return;
+      }
+      if (e.key === "Tab") {
+        const root = overlayRef.current;
+        if (!root) return;
+        const items = root.querySelectorAll<HTMLElement>("a[href]");
+        if (items.length === 0) return;
+        const first = items[0];
+        const last = items[items.length - 1];
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault();
+          last.focus();
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault();
+          first.focus();
+        }
+      }
+    };
+    document.addEventListener("keydown", onKey);
+    const focusTimer = window.setTimeout(() => {
+      overlayRef.current?.querySelector<HTMLElement>("a[href]")?.focus();
+    }, 80);
+
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+      window.clearTimeout(focusTimer);
+      hamburgerRef.current?.focus();
+    };
+  }, [mobileOpen]);
+
+  const handleNavClick = useCallback(
+    (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+      const el = document.getElementById(id);
+      // Only intercept when the section exists on this page (the single page).
+      // On project detail pages we let the Link navigate to /#id normally.
+      if (el) {
+        e.preventDefault();
+        setActive(id);
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        history.replaceState(null, "", id === "home" ? "/" : `/#${id}`);
+      }
+      setMobileOpen(false);
+    },
+    [],
+  );
 
   return (
     <>
-      <motion.header
-        className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-          scrolled ? "glass-nav py-3" : "py-4 md:py-5"
+      <header
+        className={`fixed inset-x-0 top-0 z-50 transition-colors duration-300 ${
+          scrolled ? "nav-solid" : ""
         }`}
-        initial={{ y: -100 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
       >
         <div className="container-shell">
-          <nav className="flex items-center justify-between">
+          <nav className="flex h-14 items-center justify-between">
             <Link
-              href="/"
-              className="group flex items-center gap-3"
-              data-hover
+              href="/#home"
+              onClick={(e) => {
+                handleNavClick(e, "home");
+                // Small reward for the curious — a comet on demand
+                window.dispatchEvent(new Event("launch-comet"));
+              }}
+              className="mono text-sm font-medium text-text"
+              aria-label="Carl Gergi — home"
             >
-              <div className="relative flex h-9 w-9 items-center justify-center overflow-hidden rounded-xl bg-gradient-to-br from-accent to-accent-cyan font-display text-xs font-bold text-white transition-transform duration-300 group-hover:scale-105 md:h-10 md:w-10 md:text-sm">
-                CG
-              </div>
-              <span className="hidden text-sm font-semibold tracking-tight text-text sm:block">
-                Carl Gergi
-              </span>
+              carl gergi
             </Link>
 
             {/* Desktop nav */}
-            <div className="hidden items-center gap-0.5 rounded-full border border-border bg-bg-raised/60 p-1 backdrop-blur-sm lg:flex">
-              {navItems.map((item) => {
-                const isActive =
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href);
-
+            <div className="hidden items-center gap-6 lg:flex">
+              <ThemeToggle />
+              {navItems.slice(1).map((item) => {
+                const isActive = active === item.id;
                 return (
                   <Link
-                    key={item.href}
-                    href={item.href}
-                    data-hover
-                    className={`relative rounded-full px-3.5 py-2 text-sm transition-colors duration-300 ${
-                      isActive ? "text-text" : "text-text-muted hover:text-text"
+                    key={item.id}
+                    href={`/#${item.id}`}
+                    onClick={(e) => handleNavClick(e, item.id)}
+                    aria-current={isActive ? "true" : undefined}
+                    className={`relative text-sm transition-colors duration-200 ${
+                      isActive ? "text-text" : "text-text-dim hover:text-text"
                     }`}
                   >
+                    {item.label}
                     {isActive && (
-                      <motion.div
-                        layoutId="nav-active"
-                        className="absolute inset-0 rounded-full bg-bg-elevated/60 border border-border"
-                        transition={{
-                          type: "spring",
-                          stiffness: 500,
-                          damping: 35,
-                        }}
+                      <motion.span
+                        layoutId="nav-underline"
+                        aria-hidden="true"
+                        className="absolute -bottom-1 left-0 right-0 h-px bg-accent/80"
+                        transition={{ type: "spring", stiffness: 400, damping: 35 }}
                       />
                     )}
-                    <span className="relative z-10">{item.label}</span>
                   </Link>
                 );
               })}
             </div>
 
-            {/* Mobile hamburger */}
-            <button
-              onClick={() => setMobileOpen(!mobileOpen)}
-              className="relative z-[60] flex h-9 w-9 flex-col items-center justify-center gap-1.5 lg:hidden"
-              aria-label="Toggle menu"
+            {/* Mobile: theme toggle + hamburger */}
+            <div className="flex items-center gap-2 lg:hidden">
+              <ThemeToggle />
+              <button
+              ref={hamburgerRef}
+              onClick={() => setMobileOpen((o) => !o)}
+              className="relative z-[60] flex h-11 w-11 flex-col items-center justify-center gap-1.5"
+              aria-label={mobileOpen ? "Close menu" : "Open menu"}
+              aria-expanded={mobileOpen}
+              aria-haspopup="dialog"
             >
               <motion.span
-                className="block h-0.5 w-5 bg-text"
-                animate={
-                  mobileOpen ? { rotate: 45, y: 4 } : { rotate: 0, y: 0 }
-                }
-                transition={{ duration: 0.3 }}
+                className="block h-px w-5 bg-text"
+                animate={mobileOpen ? { rotate: 45, y: 3 } : { rotate: 0, y: 0 }}
+                transition={{ duration: 0.25 }}
               />
               <motion.span
-                className="block h-0.5 w-5 bg-text"
+                className="block h-px w-5 bg-text"
                 animate={
                   mobileOpen ? { rotate: -45, y: -4 } : { rotate: 0, y: 0 }
                 }
-                transition={{ duration: 0.3 }}
+                transition={{ duration: 0.25 }}
               />
-            </button>
+              </button>
+            </div>
           </nav>
         </div>
-      </motion.header>
+      </header>
 
-      {/* Mobile menu overlay */}
+      {/* Mobile overlay menu */}
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-bg/95 backdrop-blur-xl lg:hidden"
+            ref={overlayRef}
+            role="dialog"
+            aria-modal="true"
+            aria-label="Site menu"
+            className="fixed inset-0 z-40 flex flex-col items-center justify-center bg-bg/95 backdrop-blur-sm lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.2 }}
           >
-            <nav className="flex flex-col items-center gap-1">
+            <nav className="flex flex-col items-center gap-2">
               {navItems.map((item, i) => {
-                const isActive =
-                  item.href === "/"
-                    ? pathname === "/"
-                    : pathname.startsWith(item.href);
-
+                const isActive = active === item.id;
                 return (
                   <motion.div
-                    key={item.href}
-                    initial={{ opacity: 0, y: 20 }}
+                    key={item.id}
+                    initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 10 }}
-                    transition={{ delay: i * 0.05, duration: 0.4 }}
+                    exit={{ opacity: 0 }}
+                    transition={{ delay: i * 0.04, duration: 0.3 }}
                   >
                     <Link
-                      href={item.href}
-                      onClick={() => setMobileOpen(false)}
-                      className={`block rounded-2xl px-8 py-3 font-display text-2xl font-bold tracking-tight transition-colors ${
-                        isActive ? "gradient-text" : "text-text-muted"
+                      href={item.id === "home" ? "/#home" : `/#${item.id}`}
+                      onClick={(e) => handleNavClick(e, item.id)}
+                      aria-current={isActive ? "true" : undefined}
+                      className={`block px-8 py-2.5 text-2xl font-medium tracking-tight transition-colors ${
+                        isActive ? "text-text" : "text-text-dim"
                       }`}
                     >
                       {item.label}
@@ -152,6 +248,38 @@ export function SiteNav() {
               })}
             </nav>
           </motion.div>
+        )}
+      </AnimatePresence>
+
+      {/* Back to top */}
+      <AnimatePresence>
+        {showTop && (
+          <motion.button
+            onClick={() => {
+              window.scrollTo({ top: 0, behavior: "smooth" });
+              history.replaceState(null, "", "/");
+            }}
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 12 }}
+            transition={{ duration: 0.2 }}
+            aria-label="Back to top"
+            className="card fixed bottom-5 right-5 z-50 flex h-10 w-10 items-center justify-center text-text-muted transition-colors hover:text-text"
+          >
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="1.75"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              aria-hidden="true"
+            >
+              <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+          </motion.button>
         )}
       </AnimatePresence>
     </>

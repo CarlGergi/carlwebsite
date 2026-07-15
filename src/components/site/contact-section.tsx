@@ -1,7 +1,9 @@
 "use client";
 
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import { socialLinks } from "@/data/site-content";
+import { MessageDust } from "@/components/ui/message-dust";
+import { Section } from "@/components/site/section";
 import { ScrollReveal } from "@/components/ui/scroll-reveal";
 
 type Status = "idle" | "sending" | "sent" | "error";
@@ -9,7 +11,13 @@ type Status = "idle" | "sending" | "sent" | "error";
 export function ContactSection() {
   const [status, setStatus] = useState<Status>("idle");
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
-  const loadedAt = useRef<number>(Date.now());
+  const [message, setMessage] = useState("");
+  const loadedAt = useRef<number>(0);
+
+  // Stamped after mount — used by the API's minimum-fill-time spam check
+  useEffect(() => {
+    loadedAt.current = Date.now();
+  }, []);
 
   async function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -53,175 +61,170 @@ export function ContactSection() {
   }
 
   return (
-    <section className="section-spacing">
-      <div className="container-shell">
-        <div className="grid gap-8 lg:grid-cols-2">
-          {/* Left */}
-          <ScrollReveal>
-            <div>
-              <p className="font-display text-2xl font-bold leading-snug tracking-tight text-text sm:text-3xl md:text-5xl">
-                Let&apos;s
-                <br />
-                <span className="gradient-text">connect.</span>
-              </p>
+    <Section
+      id="contact"
+      title="Contact"
+      description="An internship, a project, a hackathon team, or just a good conversation — I'd like to hear about it."
+    >
+      <div className="grid gap-10 lg:grid-cols-[1fr_1.2fr] lg:items-center">
+        {/* Left — the visitor's message, mirrored in dust as they type */}
+        <ScrollReveal>
+          <div>
+            <MessageDust text={message} sent={status === "sent"} />
 
-              <p className="mt-6 max-w-md text-base leading-relaxed text-text-muted">
-                Whether it&apos;s an internship, a project, a hackathon team,
-                or just an interesting conversation — I&apos;d love to hear
-                from you. Reach out through the form or email me directly.
-              </p>
-
-              <a
-                href="mailto:carlgergi@outlook.com"
-                data-hover
-                className="btn-glow mt-8 inline-flex items-center gap-3 rounded-full bg-gradient-to-r from-accent to-accent-cyan px-8 py-4 text-sm font-semibold text-white transition-all hover:shadow-lg"
+            <a
+              href="mailto:carlgergi@outlook.com"
+              className="btn-ghost mt-8"
+            >
+              <svg
+                width="15"
+                height="15"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
               >
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                >
-                  <rect x="2" y="4" width="20" height="16" rx="2" />
-                  <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                </svg>
-                carlgergi@outlook.com
-              </a>
+                <rect x="2" y="4" width="20" height="16" rx="2" />
+                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+              </svg>
+              carlgergi@outlook.com
+            </a>
 
-              <div className="mt-8 flex flex-wrap gap-3">
-                {socialLinks.map((link) => (
-                  <a
-                    key={link.label}
-                    href={link.href}
-                    target={
-                      link.href.startsWith("http") ? "_blank" : undefined
-                    }
-                    rel={
-                      link.href.startsWith("http") ? "noreferrer" : undefined
-                    }
-                    data-hover
-                    className="tag-pill"
-                  >
-                    {link.label}
-                  </a>
+            <div className="mt-4 flex flex-wrap gap-2.5">
+              {socialLinks
+                .filter((link) => link.label !== "Email")
+                .map((link) => (
+                <a
+                  key={link.label}
+                  href={link.href}
+                  target={link.href.startsWith("http") ? "_blank" : undefined}
+                  rel={link.href.startsWith("http") ? "noreferrer" : undefined}
+                  className="btn-pill"
+                >
+                  {link.label}
+                </a>
                 ))}
-              </div>
             </div>
-          </ScrollReveal>
+          </div>
+        </ScrollReveal>
 
-          {/* Right - form */}
-          <ScrollReveal delay={0.2}>
-            <div className="gradient-border card p-6 md:p-8">
-              <form onSubmit={handleSubmit}>
-                <div
-                  aria-hidden="true"
-                  style={{
-                    position: "absolute",
-                    left: "-10000px",
-                    top: "auto",
-                    width: "1px",
-                    height: "1px",
-                    overflow: "hidden",
-                  }}
-                >
-                  <label>
-                    Website
-                    <input
-                      name="website"
-                      type="text"
-                      tabIndex={-1}
-                      autoComplete="off"
-                      defaultValue=""
-                    />
-                  </label>
-                </div>
-                <div className="grid gap-4 sm:grid-cols-2">
-                  <label className="block">
-                    <span className="mb-1.5 block text-sm font-medium text-text">
-                      Name
-                    </span>
-                    <input
-                      name="name"
-                      type="text"
-                      required
-                      maxLength={100}
-                      placeholder="Your name"
-                      className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
-                    />
-                  </label>
-                  <label className="block">
-                    <span className="mb-1.5 block text-sm font-medium text-text">
-                      Email
-                    </span>
-                    <input
-                      name="email"
-                      type="email"
-                      required
-                      maxLength={200}
-                      placeholder="you@company.com"
-                      className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
-                    />
-                  </label>
-                </div>
-
-                <label className="mt-4 block">
-                  <span className="mb-1.5 block text-sm font-medium text-text">
-                    What&apos;s this about?
-                  </span>
-                  <select
-                    name="subject"
-                    className="w-full rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
-                  >
-                    <option>Internship opportunity</option>
-                    <option>Project collaboration</option>
-                    <option>Hackathon team</option>
-                    <option>Just saying hi</option>
-                  </select>
-                </label>
-
-                <label className="mt-4 block">
-                  <span className="mb-1.5 block text-sm font-medium text-text">
-                    Message
-                  </span>
-                  <textarea
-                    name="message"
-                    rows={5}
-                    required
-                    maxLength={5000}
-                    placeholder="Tell me about the opportunity or idea..."
-                    className="w-full resize-none rounded-xl border border-border bg-bg px-4 py-3 text-sm text-text placeholder:text-text-dim outline-none transition-all focus:border-accent focus:ring-2 focus:ring-accent/10"
-                  />
-                </label>
-
-                <button
-                  type="submit"
-                  disabled={status === "sending"}
-                  data-hover
-                  className="btn-glow mt-6 w-full rounded-xl bg-gradient-to-r from-accent to-accent-cyan py-3.5 text-sm font-semibold text-white transition-all hover:shadow-lg disabled:opacity-60"
-                >
-                  {status === "sending" ? "Sending..." : "Send message"}
-                </button>
-
-                {status === "sent" && (
-                  <p className="mt-3 text-center text-sm font-medium text-green-400">
-                    Message sent — I&apos;ll get back to you soon!
-                  </p>
-                )}
-                {status === "error" && (
-                  <p className="mt-3 text-center text-sm font-medium text-red-400">
-                    {errorMessage ?? "Something went wrong."} Try emailing me
-                    directly.
-                  </p>
-                )}
-              </form>
+        {/* Right — form */}
+        <ScrollReveal delay={0.1}>
+          <form onSubmit={handleSubmit} className="card p-6 md:p-7">
+            <div
+              aria-hidden="true"
+              style={{
+                position: "absolute",
+                left: "-10000px",
+                top: "auto",
+                width: "1px",
+                height: "1px",
+                overflow: "hidden",
+              }}
+            >
+              <label>
+                Website
+                <input
+                  name="website"
+                  type="text"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  defaultValue=""
+                />
+              </label>
             </div>
-          </ScrollReveal>
-        </div>
+
+            <div className="grid gap-4 sm:grid-cols-2">
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-text-muted">
+                  Name
+                </span>
+                <input
+                  name="name"
+                  type="text"
+                  required
+                  maxLength={100}
+                  placeholder="Your name"
+                  className="field"
+                />
+              </label>
+              <label className="block">
+                <span className="mb-1.5 block text-xs font-medium text-text-muted">
+                  Email
+                </span>
+                <input
+                  name="email"
+                  type="email"
+                  required
+                  maxLength={200}
+                  placeholder="you@company.com"
+                  className="field"
+                />
+              </label>
+            </div>
+
+            <label className="mt-4 block">
+              <span className="mb-1.5 block text-xs font-medium text-text-muted">
+                What&apos;s this about?
+              </span>
+              <select name="subject" className="field">
+                <option>Internship opportunity</option>
+                <option>Project collaboration</option>
+                <option>Hackathon team</option>
+                <option>Just saying hi</option>
+              </select>
+            </label>
+
+            <label className="mt-4 block">
+              <span className="mb-1.5 block text-xs font-medium text-text-muted">
+                Message
+              </span>
+              <textarea
+                name="message"
+                rows={5}
+                required
+                maxLength={5000}
+                placeholder="Tell me about the opportunity or idea..."
+                className="field resize-none"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
+              />
+            </label>
+
+            <button
+              type="submit"
+              disabled={status === "sending"}
+              className="btn-primary mt-6 w-full justify-center disabled:opacity-60"
+            >
+              {status === "sending" ? "Sending..." : "Send message"}
+            </button>
+
+            {/* Persistent live region so screen readers announce the result;
+                spacing only appears when a message renders */}
+            <div
+              aria-live="polite"
+              aria-atomic="true"
+              className="text-center text-sm font-medium"
+            >
+              {status === "sent" && (
+                <span className="mt-3 block text-text">
+                  Message sent — I&apos;ll get back to you soon.
+                </span>
+              )}
+              {status === "error" && (
+                <span className="mt-3 block text-text">
+                  {errorMessage
+                    ? `${errorMessage} — try emailing me directly.`
+                    : "Couldn't send — try emailing me directly."}
+                </span>
+              )}
+            </div>
+          </form>
+        </ScrollReveal>
       </div>
-    </section>
+    </Section>
   );
 }
