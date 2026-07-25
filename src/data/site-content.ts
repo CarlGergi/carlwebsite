@@ -18,6 +18,38 @@ export type Project = {
 
 export const projects: Project[] = [
   {
+    title: "SIMTERN",
+    slug: "simtern",
+    tagline:
+      "An agentic AI internship simulator — a living company of AI coworkers where you prove job skills by doing the work",
+    description:
+      "Every graduate hits the same wall: you need experience to get a job, and a job to get experience — and résumés let you claim skills without ever proving them. SIMTERN closes that loop. You enter a living pixel-art company staffed entirely by AI agents, take on a real business problem, investigate it by talking to people, make decisions with consequences, and survive a crisis. An evaluator agent then turns your day into a skill passport where every rating links to the exact moment you earned it.",
+    tags: [
+      "Next.js 16",
+      "React 19",
+      "TypeScript",
+      "FastAPI",
+      "Python",
+      "Claude API",
+      "Canvas",
+      "zustand",
+      "SQLite",
+    ],
+    bullets: [
+      "Architected a simulation orchestrator that owns all world state — company health, budget, team trust, gathered clues, an event queue, and the full transcript — with every coworker running as an independent Claude agent carrying its own system prompt, privileged information, conflicting goals, and per-conversation memory, so investigation became a real mechanic rather than a menu.",
+      "Split narration from scoring so the model never owns a number: a deterministic engine computes every metric change, clue unlock, and verdict while the agents only speak — making the final evaluation defensible instead of a matter of model mood.",
+      "Hand-rolled a two-layer canvas rendering engine with A* pathfinding, Y-sorted depth, a free zoom/pan camera, and a minimap without using a game engine, plus a photo-to-avatar pipeline chaining Claude vision, a character sheet, an image model, and a sprite-sheet normalizer into a canonical 4×4 sprite PNG.",
+      "Hardened the system for live inference — every model call retries once and then degrades gracefully in character, with a wiring test asserting that no scripted dialogue can reach a live player. Agent-to-agent conversations generate in batched calls keyed to world-state changes with per-session caps, keeping the office alive without API spend scaling linearly with realism.",
+      "Shipped evaluation as a first-class feature: an evaluator agent reads the full transcript and decision log and emits structured JSON — skill, strength, evidence sentence, and a transcript reference — which powers a replay UI, so every rating links back to the moment that proves it.",
+    ],
+    cta: "Watch the demo",
+    href: "https://youtu.be/xk_YjJnc1cY",
+    event: "Kanz — World's Largest AI Hackathon",
+    repo: "https://github.com/CarlGergi/simtern",
+    demo: "https://youtu.be/xk_YjJnc1cY",
+    image: "/projects/simtern.png",
+  },
+  {
     title: "Argus",
     slug: "argus",
     tagline:
